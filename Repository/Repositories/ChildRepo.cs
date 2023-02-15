@@ -20,7 +20,7 @@ namespace Repository.Repositories
         public async Task<Child> Add(Child model)
         {
             var returnModel = await dataSource.Childs.AddAsync(model);
-            dataSource.SaveChangesAsync();
+            //dataSource.SaveChangesAsync();
             return returnModel.Entity;
         }
 

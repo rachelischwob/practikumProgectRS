@@ -15,14 +15,18 @@ namespace Repository
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Child> Childs { get; set; }
-        public int SaveChangesAsync()
+        public async Task<int> SaveChangesAsync()
         {
-            return SaveChangesAsync();
+            return await SaveChangesAsync();
+        }
+        public int SaveChanges()
+        {
+            return  SaveChanges();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=sqlsrv;Initial Catalog=Project-RS ;Integrated Security=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer(@"Data Source=sqlsrv;Initial Catalog=Project-RS2 ;Integrated Security=True;TrustServerCertificate=True");
             base.OnConfiguring(optionsBuilder);
         }
     }

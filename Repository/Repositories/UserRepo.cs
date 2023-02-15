@@ -20,8 +20,8 @@ namespace Repository.Repositories
 
         public async Task<User> Add(User model)
         {
-          var returnModel =  await dataSource.Users.AddAsync(model);
-            dataSource.SaveChangesAsync();
+          var returnModel =   dataSource.Users.Add(model);
+            //dataSource.SaveChanges();
             return returnModel.Entity;
         }
 

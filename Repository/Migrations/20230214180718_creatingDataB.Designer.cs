@@ -12,8 +12,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230207171606_createDB")]
-    partial class createDB
+    [Migration("20230214180718_creatingDataB")]
+    partial class creatingDataB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,17 +92,12 @@ namespace Repository.Migrations
             modelBuilder.Entity("Entity.Child", b =>
                 {
                     b.HasOne("Entity.User", "ParentUser")
-                        .WithMany("Children")
+                        .WithMany()
                         .HasForeignKey("ParentUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ParentUser");
-                });
-
-            modelBuilder.Entity("Entity.User", b =>
-                {
-                    b.Navigation("Children");
                 });
 #pragma warning restore 612, 618
         }

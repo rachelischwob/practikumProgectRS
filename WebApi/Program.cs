@@ -20,6 +20,10 @@ namespace WebApi
             builder.Services.AddScoped<IUserServ, UserSer>();
 
             builder.Services.AddRepoDependencies();
+            builder.Services.AddCors(op => { op.AddPolicy(name: "myOrigin", policy => policy.WithOrigins("*").AllowAnyMethod()); });
+                
+                
+
 
             var app = builder.Build();
 
@@ -33,7 +37,8 @@ namespace WebApi
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            //app.UseRouting();
+            app.UseCors("myOrigion");
 
             app.MapControllers();
 
