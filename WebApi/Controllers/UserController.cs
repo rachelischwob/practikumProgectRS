@@ -30,8 +30,9 @@ namespace WebApi.Controllers
         {
             return await _service.GetById(id);
         }
-
-                public async Task<UserModel> Post([FromBody] UserModel user)
+        // POST api/<UserController>
+        [HttpPost]
+        public async Task<UserModel> Post([FromBody] UserModel user)
         {
             UserModel u = new UserModel();
             ChildModel c = new ChildModel();
@@ -55,7 +56,6 @@ namespace WebApi.Controllers
                     u.Children?.Add(c);
                 }
             }
-
             return await _service.Add(u);
         }
 
