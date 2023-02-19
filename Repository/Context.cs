@@ -15,14 +15,6 @@ namespace Repository
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Child> Childs { get; set; }
-        public async Task<int> SaveChangesAsync()
-        {
-            return await SaveChangesAsync();
-        }
-        public int SaveChanges()
-        {
-            return  SaveChanges();
-        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
