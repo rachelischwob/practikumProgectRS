@@ -11,8 +11,7 @@ namespace Repository.Interface
 {
     public interface IDataSource
     {
-       Task< int> SaveChangesAsync();
-        int SaveChanges();
+       Task< int> SaveChangesAsync(CancellationToken cancellationToken = default);
         DbSet<User> Users { get; set; }
        DbSet<Child> Childs { get; set; }
     }
