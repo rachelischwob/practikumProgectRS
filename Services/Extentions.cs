@@ -20,9 +20,10 @@ namespace Service
             service.AddScoped<IUserRepo, UserRepo>();
             service.AddScoped<IChildRepo, ChildRepo>();
 
-            MapperConfiguration config = new MapperConfiguration(
-                conf => { conf.CreateMap<User, UserModel>().ReverseMap(); conf.CreateMap<Child, ChildModel>().ReverseMap(); });
 
+            MapperConfiguration config = new MapperConfiguration(
+            conf => { conf.CreateMap<User, UserModel>().ReverseMap().ForMember(dest=>dest.Gender ,opt=>opt.MapFrom(dest=>(int)dest.Gender)); conf.CreateMap<ChildModel, Child>().ReverseMap(); });
+            
             IMapper mapper = config.CreateMapper();
             service.AddSingleton(mapper);
 
