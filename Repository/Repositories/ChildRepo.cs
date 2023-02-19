@@ -19,8 +19,8 @@ namespace Repository.Repositories
         }
         public async Task<Child> Add(Child model)
         {
-            var returnModel = await dataSource.Childs.AddAsync(model);
-            //dataSource.SaveChangesAsync();
+               var returnModel = await dataSource.Childs.AddAsync(model);
+            await dataSource.SaveChangesAsync();
             return returnModel.Entity;
         }
 
