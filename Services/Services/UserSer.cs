@@ -26,51 +26,18 @@ namespace Service.Services
 
         public async Task<UserModel> Add(UserModel model)
         {
-            User tempUser = new User
-            {
-                Id = model.Id,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                NumberId = model.NumberId,
-                HMO = model.HMO,
-                Gender = (Entity.EGender)model.Gender,
-                DBO = model.DBO,
-            };
-            tempUser = (await Urepo.Add(tempUser));
-            if(model.Children != null)
-            {
+            User tempU = await Urepo.Add(mapper.Map<User>(model));
+            UserModel newUser = mapper.Map<UserModel>(tempU) ;
+            newUser.Children = new List<ChildModel>();
             foreach (ChildModel item in model.Children)
             {
-                    Child c = new Child
-                    {
-                        Id = item.Id,
-                        Name = item.Name,
-                        DOB = item.DOB,
-                        NumberId = item.NumberId,
-                        ParentUser = tempUser,
-                    };
-                c = await Crepo.Add(c);
-                item.Id=c.Id;
-                    item.ParentUserId=tempUser.Id;
+                Child tempC = mapper.Map<Child>(item);
+                tempC.ParentUser = tempU;
+                ChildModel c = mapper.Map<ChildModel>(await Crepo.Add(tempC));
+                newUser.Children.Add(c);
             }
-
-            }
-            model.Id = tempUser.Id;
-            return model;
+            return newUser;
         }
-
-        //public async Task<UserModel> Add(UserModel model)
-        //{
-
-        //    UserModel newUser= mapper.Map <UserModel>( await Urepo.Add(mapper.Map<User>(model)));
-        //    foreach (ChildModel item in model.Children)
-        //    {
-        //        item.ParentUserId = newUser.Id;
-        //        ChildModel c= mapper.Map<ChildModel>(await Crepo.Add(mapper.Map<Child>(item)));
-        //        newUser.Children.Add(c);
-        //    }
-        //    return newUser;
-        //}
         public async void Delete(int key)
         {
             UserModel thisUser = mapper.Map<UserModel>(await Urepo.GetById(key));
@@ -88,7 +55,8 @@ namespace Service.Services
             foreach (User item in temp)
             {
                 UserModel tempUser = mapper.Map<UserModel>(item);
-                tempUser.Children = await GetByParentId(tempUser.Id);
+                tempUser.Children = await this.GetByParentId(tempUser.Id);
+                list.Add(tempUser);
             }
             return list;
         }
@@ -98,7 +66,8 @@ namespace Service.Services
             List<ChildModel> listChilds = new List<ChildModel>();
             foreach (var item in tempList)
             {
-                listChilds.Add(mapper.Map<ChildModel>(item));
+                ChildModel c= mapper.Map<ChildModel>(item);
+                listChilds.Add(c);
             }
             return listChilds;
         }
@@ -106,7 +75,7 @@ namespace Service.Services
         public async Task<UserModel> GetById(int key)
         {
             UserModel user = mapper.Map<UserModel>(await Urepo.GetById(key));
-
+            if(user!=null)
             user.Children = await GetByParentId(user.Id);
             return user;
         }
