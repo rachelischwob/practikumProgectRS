@@ -31,9 +31,7 @@ namespace WebApi.Controllers
             return await _service.GetById(id);
         }
 
-        // POST api/<UserController>
-        [HttpPost]
-        public async Task<UserModel> Post([FromBody] UserModel user)
+                public async Task<UserModel> Post([FromBody] UserModel user)
         {
             UserModel u = new UserModel();
             ChildModel c = new ChildModel();
