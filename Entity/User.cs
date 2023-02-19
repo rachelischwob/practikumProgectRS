@@ -6,10 +6,6 @@ using System.Threading.Tasks;
 
 namespace Entity
 {
-   public enum EGender
-    {
-        MALE,FEMALE
-    }
     public class User
     {
         public int Id { get; set; }
@@ -17,7 +13,7 @@ namespace Entity
         public string LastName { get; set; }
         public string NumberId { get; set; }
         public String HMO { get; set; }    
-        public EGender Gender { get; set; }
+        public int Gender { get; set; }
         public DateTime DBO { get; set; }   
     }
 }
